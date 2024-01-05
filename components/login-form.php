@@ -56,14 +56,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 <!-- HTML form for login -->
 <form method="post" action="<?= htmlspecialchars($_SERVER['PHP_SELF']) ?>">
   <!-- Form content -->
-  <section class="vh-100">
-    <div class="container py-5 h-75">
+  <section class="vh-75 mt-2">
+    <div class="container py-5 h-75 text-center">
+      <h4>Welcome to the Online Gourmet Grocer Inventory System</h4>
+      <p class="mb-4">Login in with your Gourmet Grocer account to look at the inventory details</p>
       <div class="row d-flex justify-content-center align-items-center h-100">
         <div class="col-12 col-md-8 col-lg-6 col-xl-5">
           <div class="card shadow-2-strong" style="border-radius: 1rem;">
-            <div class="card-body p-5 text-center">
+            <div class="card-body p-4 text-center">
   
-              <h3 class="mb-2">Sign in</h3>
+              <h3 class="mb-3">Sign in</h3>
               <!-- Email input field -->
               <div class="form-outline mb-4">
                 <input type="email" id="email" name="email" class="form-control form-control-lg" placeholder="Email" required value="<?= htmlspecialchars($email['value'] ?? '') ?>"/>
@@ -82,13 +84,22 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
               <button class="btn btn-primary btn-lg w-100 mb-4" type="submit">Login</button>
               <!-- Link to registration page -->
               <a class="btn btn-secondary btn-lg w-100" type="submit" href="./register.php" >Not got an account?</a>
+              <div class="mt-3">
+                <a href="password-reset.php">Forgotten your password</a>
+              </div>
               
               <!-- Display message if set -->
-              <?php if ($message): ?>
-                <div class="alert alert-danger mt-4" role="alert">
-                  <?= $message ?? '' ?>
-                </div>
-              <?php endif ?>
+              <?php while($message != null):?>
+                <?php if ($message == "Please login with your new account"): ?>
+                  <div class="alert alert-success mt-4" role="alert">
+                    <?= $message ?? '' ?>
+                  </div>
+                <?php else:   ?>
+                  <div class="alert alert-danger mt-4" role="alert">
+                    <?= $message ?? '' ?>
+                  </div>
+                <?php endif ?>
+              <?php endwhile ?>
 
             </div>
           </div>
