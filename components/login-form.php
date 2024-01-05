@@ -89,7 +89,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
               </div>
               
               <!-- Display message if set -->
-              <?php while($message != null):?>
+              <?php if($message != null):?>
                 <?php if ($message == "Please login with your new account"): ?>
                   <div class="alert alert-success mt-4" role="alert">
                     <?= $message ?? '' ?>
@@ -99,7 +99,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
                     <?= $message ?? '' ?>
                   </div>
                 <?php endif ?>
-              <?php endwhile ?>
+              <?php endif ?>
 
             </div>
           </div>
