@@ -1,3 +1,7 @@
+<?php
+    $isLoggedIn = isset($_SESSION['user']);
+?>
+
 <!doctype html>
 <html lang="en">
   <head>
@@ -23,15 +27,24 @@
   </button>
   <div class="collapse navbar-collapse" id="navbarNav">
     <ul class="navbar-nav">
-      <li class="nav-item active">
-        <a class="nav-link" href="./index.php">Home</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="./Inventory.php">Equipment</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="./login.php">Login</a>
-      </li>
+      <?php if ($isLoggedIn): ?>
+        <li class="nav-item active mt-1">
+          <a class="nav-link" href="./menu.php">Menu</a>
+        </li>
+        <li class="nav-item mt-1">
+          <a class="nav-link" href="./Inventory.php">Equipment</a>
+        </li>
+        <li class="nav-item">
+        <a class="btn btn-danger btn-sm mt-2" type="submit" href="./index.php" >Logout</a>
+        </li>
+      <?php else: ?>
+        <li class="nav-item">
+          <a class="nav-link" href="./index.php">Login</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="./register.php">Register</a>
+        </li>
+      <?php endif; ?>
     </ul>
   </div>
 </nav>
