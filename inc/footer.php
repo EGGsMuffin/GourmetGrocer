@@ -3,7 +3,7 @@
     <footer class="mt-3">
       <div class="container-fluid" id="footer">
         <div class="row d-flex justify-content-center align-items-center h-100 mt-5 pt-2">
-          <p class="px-5">©2023 GourmetGrocer</p>
+          <p class="px-5>©2023 GourmetGrocer</p>
           <p>Contact us at <a href="mailto:info@GourmetGrocer.com">info@GourmetGrocer.com</a></p>
         </div>
       </div>

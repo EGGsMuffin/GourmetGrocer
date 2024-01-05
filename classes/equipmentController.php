@@ -52,7 +52,7 @@ class equipmentController {
         $sql = "UPDATE equipments SET name = :name, description = :description, image = :image WHERE id = :id";
         
         // Execute the update query with the provided equipment data
-        return $this->db->runSQL($sql, $equipment)->execute();
+        return $this->db->runSQL($sql, $equipment);
     }
 
     // Function to delete a specific equipment entry by its ID
@@ -63,7 +63,7 @@ class equipmentController {
         $args = ['id' => $id];
         
         // Execute the delete query
-        return $this->db->runSQL($sql, $args)->execute();
+        return $this->db->runSQL($sql, $args);
     }
 
 }
