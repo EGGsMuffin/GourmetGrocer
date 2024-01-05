@@ -23,38 +23,43 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
   // If all inputs are valid, proceed with registration
   if ($valid)
   {
-    // Prepare the data for registration
-    $args = ['firstname' => $fname['value'],
-             'lastname' => $sname['value'],
-             'email' => $email['value'],
-             'password' => password_hash($password['value'], PASSWORD_DEFAULT)];
-
-    // Register the member
-    $member = $controllers->members()->register_member($args);
-    if ($member) {
-      // Redirect to login page on successful registration
-      redirect("login", ["error" => "Please login with your new account"]);
-    } else {
-      // Set error message if email is already registered
+    // This Checks for if the email has already been set up with an account
+    $existing_member = $controllers->members()->get_member_by_email($email['value']);
+    if($existing_member){
+      // Set error message if is email is already used
       $message = "Email already registered.";
-    }
-    
-  }
+    }else{
+      // Prepare the data for registration
+      $args = ['firstname' => $fname['value'],
+      'lastname' => $sname['value'],
+      'email' => $email['value'],
+      'password' => password_hash($password['value'], PASSWORD_DEFAULT)];
 
+      // Register the member
+      $member = $controllers->members()->register_member($args);
+      if ($member) {
+      // Redirect to login page on successful registration
+      redirect("index", ["error" => "Please login with your new account"]);
+      } else {
+      // Set error message if the user registraion fails
+      $message = "Registration Error! Please try again!";
+      }
+    }
+  }
 }
 ?>
 
 <!-- HTML form for registration -->
 <form method="post" action=" <?= htmlspecialchars($_SERVER['PHP_SELF']) ?>">
-  <section class="vh-100">
+  <section class="vh-100 mt-5">
     <div class="container py-5 h-75">
       <div class="row d-flex justify-content-center align-items-center h-100">
         <div class="col-12 col-md-8 col-lg-6 col-xl-5">
-          <div class="card shadow-2-strong" style="border-radius: 1rem;">
-            <div class="card-body p-5 text-center">
+          <div class="card shadow-2-strong mb-5" style="border-radius: 1rem;">
+            <div class="card-body px-5 py-3 text-center">
 
-              <h3 class="mb-2">Register</h3>
-              <p>test</p>
+              <h3 class="mb-3">Register</h3>
+              <p>Please enter your details (Use your work email)</p>
               <div class="form-outline mb-4">
                 <input required type="text" id="fname" name="fname" class="form-control form-control-lg" placeholder="Firstname" value="<?= htmlspecialchars($fname['value'] ?? '') ?>"/>
                 <small class="text-danger"><?= htmlspecialchars($fname['error'] ?? '') ?></small>
@@ -81,7 +86,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
               </div>
 
               <button class="btn btn-primary btn-lg w-100 mb-4" type="submit">Register</button>
-              <a class="btn btn-secondary btn-lg w-100" type="submit" href="./login.php" >Already got an account?</a>
+              <a class="btn btn-secondary btn-lg w-100" type="submit" href="./index.php" >Already got an account?</a>
 
               <?php if ($message): ?>
                 <div class="alert alert-danger mt-4">
