@@ -1,5 +1,4 @@
 <?php
-    
     foreach(glob('./classes/*.php') as $file)
     {
         require_once $file; ///Include all PHP classes
@@ -13,8 +12,4 @@
         header("Location:$page.php" . $qs);
         exit;
     }
-
-
-
-
 ?>

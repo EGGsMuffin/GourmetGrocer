@@ -7,7 +7,7 @@
         redirect('login', ["error" => "You need to be logged in to view this page"]);
     }
 
-    $title = 'Member Page'; 
+    $title = 'Profile Page'; 
     require __DIR__ . "/inc/header.php"; 
 ?>
 
