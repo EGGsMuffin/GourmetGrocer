@@ -1,5 +1,13 @@
 <?php $isLoggedIn = isset($_SESSION['user']);?>
 
+<?php   
+    if(isset($_POST['logout'])) {
+      session_unset();
+      header("Location:index.php?showPopup=true");
+      exit();
+    }
+?>
+
 <!doctype html>
 <html lang="en">
   <head>
@@ -10,6 +18,7 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="./css/style.css">
+    <title><?php echo $title ?? "Gourmet Grocer" ?></title>
   </head>
   <body>
     <!-- Optional JavaScript -->
@@ -20,9 +29,9 @@
   
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
       <?php if ($isLoggedIn): ?>
-        <a class="navbar-brand" href="./member.php">Online Shop</a>
+        <a class="navbar-brand" href="./member.php">Online Inventory</a>
       <?php else: ?>
-        <a class="navbar-brand" href="./index.php">Online Shop</a>
+        <a class="navbar-brand" href="./index.php">Online Inventory</a>
       <?php endif; ?>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -30,15 +39,18 @@
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav">
           <?php if ($isLoggedIn): ?>
-            <li class="nav-item active mt-1">
-              <a class="nav-link" href="./menu.php">Menu</a>
-            </li>
-            <li class="nav-item mt-1">
-              <a class="nav-link" href="./Inventory.php">Equipment</a>
-            </li>
-            <li class="nav-item">
-            <a class="btn btn-danger btn-sm mt-2" type="submit" href="./index.php" >Logout</a>
-            </li>
+              <li class="nav-item active mt-1">
+                <a class="nav-link" href="./menu.php">Menu</a>
+              </li>
+              <li class="nav-item mt-1">
+                <a class="nav-link" href="./Inventory.php">Equipment</a>
+              </li>
+            </ul>
+            <div class="ml-auto">
+              <form method="post">
+                <input class="p-2 px-3" id="logout_button" type="submit" name="logout" value="Logout">
+              </form>
+            </div>
           <?php else: ?>
             <li class="nav-item">
               <a class="nav-link" href="./index.php">Login</a>

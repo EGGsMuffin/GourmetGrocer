@@ -1,3 +1,11 @@
 #footer{
     background-color: darkgray;
 }
+
+#logout_button{
+    background-color: red;
+    color: white;
+    text-align: center;
+    border-radius: 5px;
+    border: none;
+}

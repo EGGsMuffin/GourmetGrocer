@@ -1,56 +1,55 @@
 <?php
-// Start the session to maintain user state
-session_start();
-// Clear all session variables
-session_unset(); 
+  // Start the session to maintain user state
+  session_start();
+  // Clear all session variables
+  session_unset();
 
-// Include the functions file for utility functions
-require_once './inc/functions.php';
+  // Include the functions file for utility functions
+  require_once './inc/functions.php';
 
-// Initialize variables for message, email, and password
-$message = isset($_GET['error']) ? htmlspecialchars($_GET['error']) : '';
-$email = null;
-$password = null;
+  // Initialize variables for message, email, and password
+  $message = isset($_GET['error']) ? htmlspecialchars($_GET['error']) : '';
+  $email = null;
+  $password = null;
 
-// Check if the form is submitted via POST
-if ($_SERVER['REQUEST_METHOD'] == 'POST')
-{
-    // Process the submitted email and password
-    $email = InputProcessor::processEmail($_POST['email']);
-    $password = InputProcessor::processPassword($_POST['password']);
+  // Check if the form is submitted via POST
+  if ($_SERVER['REQUEST_METHOD'] == 'POST')
+  {
+      // Process the submitted email and password
+      $email = InputProcessor::processEmail($_POST['email']);
+      $password = InputProcessor::processPassword($_POST['password']);
 
-    // Check if both email and password are valid
-    $valid = $email['valid'] && $password['valid'];
+      // Check if both email and password are valid
+      $valid = $email['valid'] && $password['valid'];
 
-    // If valid, attempt to log in the member
-    if ($valid) {
-  
-      // Call the login function from the member controller
-      $member = $controllers->members()->login_member($email['value'], $password['value']);
+      // If valid, attempt to log in the member
+      if ($valid) {
+    
+        // Call the login function from the member controller
+        $member = $controllers->members()->login_member($email['value'], $password['value']);
 
-      // Check if login was successful
-      if (!$member) {
-        // Set error message if login failed
-        $message = "User details are incorrect.";
-     } else {
-         // Set user session data on successful login
-         $_SESSION['user'] = $member;
-
-         // Redirect based on user type
-         if ($member['user_type'] === 'admin') {
-          redirect('.\Inventory.php'); // Redirect admin users
+        // Check if login was successful
+        if (!$member) {
+          // Set error message if login failed
+          $message = "User details are incorrect.";
       } else {
-          redirect('member'); // Redirect non-admin users
-      }
-      }
+          // Set user session data on successful login
+          $_SESSION['user'] = $member;
 
+          // Redirect based on user type
+          if ($member['user_type'] === 'admin') {
+            redirect('.\Inventory.php'); // Redirect admin users
+        } else {
+            redirect('member'); // Redirect non-admin users
+        }
+        }
+
+      }
+      else {
+        // Set error message for invalid input
+        $message =  "Please fix the above errors. ";
     }
-    else {
-       // Set error message for invalid input
-       $message =  "Please fix the above errors. ";
-   }
-
-} 
+  } 
 ?>
 
 <!-- HTML form for login -->
@@ -100,7 +99,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
                   </div>
                 <?php endif ?>
               <?php endif ?>
-
             </div>
           </div>
         </div>
