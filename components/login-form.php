@@ -15,39 +15,43 @@
   // Check if the form is submitted via POST
   if ($_SERVER['REQUEST_METHOD'] == 'POST')
   {
-      // Process the submitted email and password
-      $email = InputProcessor::processEmail($_POST['email']);
-      $password = InputProcessor::processPassword($_POST['password']);
+    // Process the submitted email and password
+    $email = InputProcessor::processEmail($_POST['email']);
+    $password = InputProcessor::processPassword($_POST['password']);
 
-      // Check if both email and password are valid
-      $valid = $email['valid'] && $password['valid'];
+    // Check if both email and password are valid
+    $valid = $email['valid'] && $password['valid'];
 
-      // If valid, attempt to log in the member
-      if ($valid) {
-    
-        // Call the login function from the member controller
-        $member = $controllers->members()->login_member($email['value'], $password['value']);
+    // If valid, attempt to log in the member
+    if ($valid) {
+      // Call the login function from the member controller
+      $member = $controllers->members()->login_member($email['value'], $password['value']);
 
-        // Check if login was successful
-        if (!$member) {
-          // Set error message if login failed
-          $message = "User details are incorrect.";
+      // Check if login was successful
+      if (!$member) {
+        // Set error message if login failed
+        $message = "User details are incorrect.";
       } else {
-          // Set user session data on successful login
-          $_SESSION['user'] = $member;
+        // Set user session data on successful login
+        $_SESSION['user'] = $member;
 
-          // Redirect based on user type
-          if ($member['user_type'] === 'admin') {
-            redirect('.\Inventory.php'); // Redirect admin users
+        $member_id = $controllers->members()->get_member_by_email($_SESSION['user']['email']);
+        $member_id = (int)$member_id['ID'];
+        $user_Role = $controllers->userRoles()->get_userRole_by_user_id($member_id);
+        $user_Role = (int)$user_Role['role_id'];
+        $user_Role = $controllers->roles()->get_role_by_role_id($user_Role);
+
+        // Redirect based on user type
+        if ($user_Role['name'] === 'Admin') {
+          redirect('Inventory'); // Redirect admin users
         } else {
-            redirect('member'); // Redirect non-admin users
+          redirect('member'); // Redirect non-admin users
         }
-        }
-
       }
-      else {
-        // Set error message for invalid input
-        $message =  "Please fix the above errors. ";
+    }
+    else {
+      // Set error message for invalid input
+      $message =  "Please fix the above errors. ";
     }
   } 
 ?>

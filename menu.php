@@ -10,9 +10,51 @@
 
 <?php $title = 'Menu'; require __DIR__ . "/inc/header.php";?>
 
-<a class="btn btn-danger btn-sm mt-2" type="submit" href="./inventory.php" >Logout</a>
-<a class="btn btn-danger btn-sm mt-2" type="submit" href="./suppliers.php" >Logout</a>
-<a class="btn btn-danger btn-sm mt-2" type="submit" href="./users.php" >Logout</a>
-<a class="btn btn-danger btn-sm mt-2" type="submit" href="./categories.php" >Logout</a>
+<section>
+    <div class="text-center">
+        <h1 class="display-4">Welcome to Admin Home</h1>
+        <div class="justify-content-center align-items-center mx-5 mt-5" style="height: 100vh;">
+            <div class="row">
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <a href="manage_roles.php" class="card text-decoration-none text-center">
+                        <div class="card-body bg-primary" style="height: 200px;">
+                            <h5 class="card-title text-dark" style="font-size: 24px; line-height: 150px;">Manage Roles</h5>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <a href="" class="card text-decoration-none text-center">
+                        <div class="card-body bg-secondary" style="height: 200px;">
+                            <h5 class="card-title text-dark" style="font-size: 24px; line-height: 150px;">Manage Users</h5>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <a href="" class="card text-decoration-none text-center">
+                        <div class="card-body bg-info" style="height: 200px;">
+                            <h5 class="card-title text-dark" style="font-size: 24px; line-height: 150px;">Manage Rooms</h5>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <a href="" class="card text-decoration-none text-center">
+                        <div class="card-body bg-success" style="height: 200px;">
+                            <h5 class="card-title text-dark" style="font-size: 24px; line-height: 150px;">Manage Equipment</h5>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <a href="" class="card text-decoration-none text-center">
+                        <div class="card-body bg-warning" style="height: 200px;">
+                            <h5 class="card-title text-dark" style="font-size: 24px; line-height: 150px;">Manage Classes</h5>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 
 <?php require __DIR__ . "/inc/footer.php"; ?>

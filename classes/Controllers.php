@@ -4,6 +4,8 @@
         protected $db = null;
         protected $members = null;
         protected $equipment = null;
+        protected $userRoles = null;
+        protected $roles = null;
 
         // Constructor method for the Controllers class
         public function __construct()
@@ -50,6 +52,22 @@
                 $this->members = new MemberController($this->db);
             }
             return $this->members;
+        }
+
+        public function userRoles()
+        {
+            if ($this->userRoles === null) {
+                $this->userRoles = new UserRolesController($this->db);
+            }
+            return $this->userRoles;
+        }
+
+        public function roles()
+        {
+            if ($this->roles === null) {
+                $this->roles = new RolesController($this->db);
+            }
+            return $this->roles;
         }
     }
 ?>
