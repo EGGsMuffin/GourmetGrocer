@@ -45,7 +45,7 @@
 
     <section>
         <div class="text-center">
-            <div class="justify-content-center align-items-center mx-5 mt-5" style="height: 100vh;">
+            <div class="justify-content-center align-items-center mx-5 mt-5">
                 <div class="row">
                     <div class="col-lg-12 col-md-12 mb-4">
                         <a href="create_roles.php" class="btn btn-primary btn-lg w-100">Create Role</a>
