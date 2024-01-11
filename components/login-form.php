@@ -43,7 +43,7 @@
 
         // Redirect based on user type
         if ($user_Role['name'] === 'Admin') {
-          redirect('Inventory'); // Redirect admin users
+          redirect('manage_inventory'); // Redirect admin users
         } else {
           redirect('member'); // Redirect non-admin users
         }

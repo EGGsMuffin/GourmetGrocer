@@ -12,13 +12,11 @@
             $this->db = $db;
         }
 
-
         public function get_userRole_by_user_id(int $user_id)
         {
             $sql = "SELECT * FROM user_roles WHERE user_id = :id";
             $args = ['id' => $user_id];
             return $this->db->runSQL($sql, $args)->fetch();
         }
-
     }
 ?>

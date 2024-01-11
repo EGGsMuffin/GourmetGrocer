@@ -43,7 +43,10 @@
                 <a class="nav-link" href="./menu.php">Menu</a>
               </li>
               <li class="nav-item mt-1">
-                <a class="nav-link" href="./Inventory.php">Equipment</a>
+                <a class="nav-link" href="./manage_inventory.php">Equipment</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="./manage_roles.php">Roles</a>
               </li>
             </ul>
             <div class="ml-auto">
