@@ -29,7 +29,7 @@
   
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
       <?php if ($isLoggedIn): ?>
-        <a class="navbar-brand" href="./member.php">Online Inventory</a>
+        <a class="navbar-brand" href="./profile.php">Online Inventory</a>
       <?php else: ?>
         <a class="navbar-brand" href="./index.php">Online Inventory</a>
       <?php endif; ?>
@@ -37,16 +37,19 @@
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
           <?php if ($isLoggedIn): ?>
-              <li class="nav-item active mt-1">
+              <li class="nav-item active">
                 <a class="nav-link" href="./menu.php">Menu</a>
               </li>
-              <li class="nav-item mt-1">
+              <li class="nav-item">
                 <a class="nav-link" href="./manage_inventory.php">Equipment</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="./manage_roles.php">Roles</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="./manage_users.php">Users</a>
               </li>
             </ul>
             <div class="ml-auto">

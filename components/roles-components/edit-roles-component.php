@@ -7,7 +7,7 @@
 
   $id = (int)$_GET['id'];
   $currentDateTime = date("Y-m-d H:i:s");
-  $roles = $controllers->roles()->get_role_by_role_id($id);
+  $roles = $controllers->roles()->get_role_by_id($id);
     
 
   if ($_SERVER['REQUEST_METHOD'] == 'POST')

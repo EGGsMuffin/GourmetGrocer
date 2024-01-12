@@ -6,7 +6,7 @@
   $message = isset($_GET['error']) ? htmlspecialchars($_GET['error']) : '';
 
   $id = (int)$_GET['id'];
-  $roles = $controllers->roles()->get_role_by_role_id($id);
+  $roles = $controllers->roles()->get_role_by_id($id);
     
 
   if ($_SERVER['REQUEST_METHOD'] == 'POST')

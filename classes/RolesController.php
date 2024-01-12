@@ -13,10 +13,24 @@
         }
 
 
-        public function get_role_by_role_id(int $id)
+        public function get_role_by_id(int $id)
         {
             $sql = "SELECT * FROM roles WHERE id = :id";
             $args = ['id' => $id];
+            return $this->db->runSQL($sql, $args)->fetch();
+        }
+
+        public function get_role_name_by_id(int $id)
+        {
+            $sql = "SELECT * FROM roles WHERE id = :id";
+            $args = ['id' => $id];
+            return $this->db->runSQL($sql, $args)->fetch();
+        }
+
+        public function get_role_id_by_name(string $name)
+        {
+            $sql = "SELECT id FROM roles WHERE name = :name";
+            $args = ['name' => $name];
             return $this->db->runSQL($sql, $args)->fetch();
         }
 

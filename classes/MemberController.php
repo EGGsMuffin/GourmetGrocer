@@ -45,7 +45,7 @@
         public function update_member(array $member)
         {
             // SQL query to update a member's information
-            $sql = "UPDATE users SET firstname = :firstname, lastname = :lastname, email = :email WHERE id = :id";
+            $sql = "UPDATE users SET firstname = :firstname, lastname = :lastname, email = :email, modifiedOn = :modifiedOn WHERE id = :id";
             // Execute the query with the provided updated data
             return $this->db->runSQL($sql, $member);
         }

@@ -39,13 +39,13 @@
         $member_id = (int)$member_id['ID'];
         $user_Role = $controllers->userRoles()->get_userRole_by_user_id($member_id);
         $user_Role = (int)$user_Role['role_id'];
-        $user_Role = $controllers->roles()->get_role_by_role_id($user_Role);
+        $user_Role = $controllers->roles()->get_role_by_id($user_Role);
 
         // Redirect based on user type
-        if ($user_Role['name'] === 'Admin') {
-          redirect('manage_inventory'); // Redirect admin users
+        if ($user_Role['name'] === 'admin') {
+        redirect('manage_inventory'); // Redirect admin users
         } else {
-          redirect('member'); // Redirect non-admin users
+          redirect('profile'); // Redirect non-admin users
         }
       }
     }
@@ -90,7 +90,7 @@
               <div class="mt-3">
                 <a href="password-reset.php">Forgotten your password</a>
               </div>
-              
+
               <!-- Display message if set -->
               <?php if($message != null):?>
                 <?php if ($message == "Please login with your new account"): ?>

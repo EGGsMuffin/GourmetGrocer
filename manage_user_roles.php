@@ -8,8 +8,8 @@
     }
 ?>
 
-<?php $title = 'Create Roles Page'; require __DIR__ . "/inc/header.php"; ?>
+<?php $title = 'Roles Management Page'; require __DIR__ . "/inc/header.php"; ?>
      
-<?php require __DIR__ . "/components/roles-components/create-roles-component.php"; ?>
+<?php require __DIR__ . "/components/user-roles-components/manage-user-roles-component.php"; ?>
 
 <?php require __DIR__ . "/inc/footer.php"; ?>

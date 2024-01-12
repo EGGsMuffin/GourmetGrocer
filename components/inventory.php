@@ -22,8 +22,8 @@
                 <tr>
                     <td>
                         <img src="<?= htmlspecialchars($equip['image']) ?>"
-                             alt="Image of <?= htmlspecialchars($equip['description']) ?>" 
-                             style="width: 100px; height: auto;"> <!-- Display equipment image with escaping for security -->
+                            alt="Image of <?= htmlspecialchars($equip['description']) ?>" 
+                            style="width: 100px; height: auto;"> <!-- Display equipment image with escaping for security --> 
                     </td>
                     <td><?= htmlspecialchars($equip['name']) ?></td> 
                     <td><?= htmlspecialchars($equip['description']) ?></td> 

@@ -1,15 +1,15 @@
-<?php 
-    session_start(); 
+<?php
+    session_start();
     require_once 'inc/functions.php';
 
     if (!isset($_SESSION['user']))
     {
-        redirect('login', ["error" => "You need to be logged in to view this page"]);
+        redirect('index', ["error" => "You need to be logged in to view this page"]);
     }
 
-    $title = 'Profile Page'; 
-    require __DIR__ . "/inc/header.php"; 
-?>
+    $title = 'Profile Page';
+    require  __DIR__ . "/inc/header.php"; 
+?>   
 
 <h1>Welcome <?= $_SESSION['user']['firstname'] ?? 'Member' ?>!</h1>
 

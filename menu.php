@@ -30,18 +30,16 @@
                     </a>
                 </div>
                 <div class="col-lg-4 col-md-6 mb-4">
-                    <a href="" class="card text-decoration-none text-center">
+                    <a href="manage_user_roles.php" class="card text-decoration-none text-center">
                         <div class="card-body bg-info" style="height: 200px;">
-                            <h5 class="card-title text-dark" style="font-size: 24px; line-height: 150px;">Manage Rooms</h5>
+                            <h5 class="card-title text-dark" style="font-size: 24px; line-height: 150px;">Manage User Roles</h5>
                         </div>
                     </a>
                 </div>
-            </div>
-            <div class="row">
                 <div class="col-lg-4 col-md-6 mb-4">
-                    <a href="" class="card text-decoration-none text-center">
+                    <a href="manage_suppliers.php" class="card text-decoration-none text-center">
                         <div class="card-body bg-success" style="height: 200px;">
-                            <h5 class="card-title text-dark" style="font-size: 24px; line-height: 150px;">Manage Equipment</h5>
+                            <h5 class="card-title text-dark" style="font-size: 24px; line-height: 150px;">Manage Suppliers</h5>
                         </div>
                     </a>
                 </div>

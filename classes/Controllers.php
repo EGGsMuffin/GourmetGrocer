@@ -6,6 +6,7 @@
         protected $equipment = null;
         protected $userRoles = null;
         protected $roles = null;
+        protected $suppliers = null;
 
         // Constructor method for the Controllers class
         public function __construct()
@@ -14,7 +15,7 @@
             // TODO: Move these to a configuration file or environment variables for better security and flexibility
             $type ='mysql';
             $server = '127.0.0.1'; // Localhost server
-            $db = 'shop2'; // Database name
+            $db = 'shop'; // Database name
             $port = '3306'; // Port for MySQL
             $charset = 'latin1'; // Character set
 
@@ -68,6 +69,14 @@
                 $this->roles = new RolesController($this->db);
             }
             return $this->roles;
+        }
+
+        public function suppliers()
+        {
+            if ($this->suppliers === null) {
+                $this->suppliers = new SuppliersController($this->db);
+            }
+            return $this->suppliers;
         }
     }
 ?>
