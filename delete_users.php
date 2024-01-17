@@ -8,7 +8,7 @@
     }
 ?>
 
-<?php $title = 'Delete Users Page'; require __DIR__ . "/inc/header.php"; ?>
+<?php $title = 'Delete User Page'; require __DIR__ . "/inc/header.php"; ?>
      
 <?php require __DIR__ . "/components/users-components/delete-users-component.php"; ?>
 

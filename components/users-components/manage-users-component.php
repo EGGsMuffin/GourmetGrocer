@@ -2,6 +2,7 @@
     // Include the functions file for necessary functions and classes
     require_once './inc/functions.php';
 
+    // Retrieve all member data using the members controller
     $users = $controllers->members()->get_all_members();
 
     $errormessage = isset($_GET['error']) ? htmlspecialchars($_GET['error']) : '';
@@ -9,7 +10,7 @@
 ?>
 
 
-<div class="container mt-4">
+<div class="container mt-4" style="height: 100vh;">
     <h2 class="text-center py-3">User Management</h2> 
     <table class="table table-striped text-center">
         <thead>
@@ -24,6 +25,7 @@
             </tr>
         </thead>
         <tbody>
+            <!-- Displays all rows of data in the members table -->
             <?php foreach ($users as $user): ?>
                 <tr>
                     <td><?= htmlspecialchars($user['ID']) ?></td>
@@ -35,9 +37,11 @@
                     <td>
                         <div class="row justify-content-center mx-1">
                             <div class="col-lg-4 col-md-6 col-sm-12 mb-1">
+                                <!-- Takes user to the edit page -->
                                 <?php echo "<a href='edit_users.php?id=" . $user["ID"] . "'class='btn btn-warning'>Edit</a>"; ?>
                             </div>
                             <div class="col-lg-4 col-md-6 col-sm-12 mb-1">
+                                <!-- Takes user to the delete page -->
                                 <?php echo "<a href='delete_users.php?id=" . $user["ID"] . "'class='btn btn-danger'>Delete</a>";?>
                             </div>                            
                         </div>
@@ -49,9 +53,10 @@
 
     <section>
         <div class="text-center">
-            <div class="justify-content-center align-items-center mx-5 mt-5">
+            <div class="justify-content-center align-items-center mx-5 my-5">
                 <div class="row">
                     <div class="col-lg-12 col-md-12 mb-4">
+                        <!-- Takes user to the create page -->
                         <a href="create_users.php" class="btn btn-primary btn-lg w-100">Create User</a>
                         <?php if($errormessage != null):?>
                             <div class="alert alert-danger mt-4" role="alert">

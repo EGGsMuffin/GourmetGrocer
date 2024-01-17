@@ -2,64 +2,58 @@
     // Include the functions file for necessary functions and classes
     require_once './inc/functions.php';
 
-    // Retrieve all member data using the members controller
-    $users = $controllers->members()->get_all_members();
+    // Retrieve all equipment data using the equipment controller
+    $equipment = $controllers->equipment()->get_all_equipments();
 
     $errormessage = isset($_GET['error']) ? htmlspecialchars($_GET['error']) : '';
     $successmessage = isset($_GET['success']) ? htmlspecialchars($_GET['success']) : '';
 ?>
 
+<!-- HTML for displaying the equipment inventory -->
 <div class="container mt-4" style="height: 100vh;">
-    <h2 class="text-center py-3">User Role Management</h2> 
-    <table class="table table-striped text-center">
+    <h2>Equipment Inventory</h2> 
+    <table class="table table-striped">
         <thead>
             <tr>
-                <th>Firstname</th>
-                <th>Lastname</th>   
-                <th>Email</th>
-                <th>Roles</th>   
-                <th></th> 
+                <th>Image</th> 
+                <th>Name</th> 
+                <th>Description</th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
-            <!-- Displays all rows of data in the members table -->
-            <?php foreach ($users as $user): ?>
+            <?php foreach ($equipment as $equip): ?> <!-- Loop through each equipment item -->
                 <tr>
-                    <td><?= htmlspecialchars($user['firstname']) ?></td>
-                    <td><?= htmlspecialchars($user['lastname']) ?></td> 
-                    <td><?= htmlspecialchars($user['email']) ?></td>
                     <td>
-                        <?=
-                        //Gets the users role
-                        $user_id = null;
-                        $user_id = $user['ID'];
-                        //Gets the role id from the user id
-                        $role_id = $controllers->userRoles()->get_role_id_by_user_id($user_id);
-                        $id = (int)$role_id['role_id'];
-                        //Gets the role name from the role id
-                        $role_name = $controllers->roles()->get_role_by_id($id);
-                        $name = $role_name['name'];
-                        echo htmlspecialchars($name) 
-                        ?>
+                        <img src="<?= htmlspecialchars($equip['image']) ?>"
+                            alt="Image of <?= htmlspecialchars($equip['description']) ?>" 
+                            style="width: 100px; height: auto;"> <!-- Display equipment image with escaping for security --> 
                     </td>
+                    <td><?= htmlspecialchars($equip['name']) ?></td> 
+                    <td><?= htmlspecialchars($equip['description']) ?></td>
                     <td>
                         <div class="row justify-content-center mx-1">
                             <div class="col-lg-4 col-md-6 col-sm-12 mb-1">
                                 <!-- Takes user to the edit page -->
-                                <?php echo "<a href='edit_user_roles.php?id=" . $user["ID"] . "'class='btn btn-warning'>Edit</a>"; ?>
-                            </div>                          
+                                <?php echo "<a href='edit_inventory.php?id=" . $equip["id"] . "'class='btn btn-warning'>Edit</a>"; ?>
+                            </div>
+                            <div class="col-lg-4 col-md-6 col-sm-12 mb-1">
+                                <!-- Takes user to the delete page -->
+                                <?php echo "<a href='delete_inventory.php?id=" . $equip["id"] . "'class='btn btn-danger'>Delete</a>";?>
+                            </div>                            
                         </div>
                     </td>
                 </tr>
             <?php endforeach; ?>
         </tbody>
     </table>
-
     <section>
         <div class="text-center">
             <div class="justify-content-center align-items-center mx-5 mt-5">
                 <div class="row">
                     <div class="col-lg-12 col-md-12 mb-4">
+                        <!-- Takes user to the create page -->
+                        <a href="create_inventory.php" class="btn btn-primary btn-lg w-100">Create Role</a>
                         <?php if($errormessage != null):?>
                             <div class="alert alert-danger mt-4" role="alert">
                                 <?= $errormessage ?? '' ?>

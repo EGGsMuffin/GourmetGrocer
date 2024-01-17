@@ -5,38 +5,50 @@
   // Initialize a variable to store any error message from the query string
   $message = isset($_GET['error']) ? htmlspecialchars($_GET['error']) : '';
 
-  $currentDateTime = date("Y-m-d H:i:s");
-
   if ($_SERVER['REQUEST_METHOD'] == 'POST')
   {
-    $firstname =  $_POST['firstname'];
-    $lastname =  $_POST['lastname'];
-    $email =  $_POST['email'];
-    $password =  InputProcessor::processPassword($_POST['password'], $_POST['password-v']); 
-    
-    $existing_user = $controllers->members()->get_member_by_email($email);
-    if($existing_user){
-      redirect("manage_users",["error" => "User already exists!"]);
-    }else{
-      // Prepare the data for registration
-      $args = ['firstname' => $firstname,
-      'lastname' => $lastname,
-      'email' => $email,
-      'password' => $password];
+    //Process the submitted form data
+    $firstname =  InputProcessor::processString($_POST['firstname']);
+    $lastname =  InputProcessor::processString($_POST['lastname']);
+    $email =  InputProcessor::processEmail($_POST['email']);
+    $password =  InputProcessor::processPassword($_POST['password'], $_POST['password-v']);
 
-      $user = $controllers->members()->register_member($args);
+    //Validate all inputs
+    $valid = $firstname['valid'] && $lastname['valid'] && $email['valid'] && $password['valid'];
 
-      $user_id = $controllers->members()->get_member_by_email($email);
-      $user_id = (int)$user_id['ID'];
+    //If all inputs are valid, proceed with update
+    if ($valid){
+      //Checks if email already exists
+      $existing_user = $controllers->members()->get_member_by_email($email['value']);
+      if($existing_user){
+        //Takes the user to the user management page with error message
+        redirect("manage_users",["error" => "User already exists!"]);
+      }else{
+        //Prepare the data for registration
+        $args = ['firstname' => $firstname['value'],
+        'lastname' => $lastname['value'],
+        'email' => $email['value'],
+        'password' => $password['value']];
 
-      $user_role = ['user_id' => $user_id,
-      'role_id' => '7'];
+        //Registers the new user
+        $user = $controllers->members()->register_member($args);
 
-      $role_assigned = $controllers->userRoles()->register_user($user_role);
-      if ($user) {
-        redirect("manage_users", ["success" => "Member has been created!"]);
-      } else {
-        $message = "Member Creation Error! Please try again!";
+        //Get the new user's id using their email
+        $user_id = $controllers->members()->get_member_by_email($email);
+        $user_id = (int)$user_id['ID'];
+
+        //Create the role of a staff member for the new user account
+        $user_role = ['user_id' => $user_id,
+        'role_id' => '7'];
+        $role_assigned = $controllers->userRoles()->register_user_role($user_role);
+
+        if ($user) {
+          //Takes the user to the user management page with success message
+          redirect("manage_users", ["success" => "Member has been created!"]);
+        } else {
+          //Takes the user to the user management page with error message
+          redirect("manage_users", ["success" => "Member Creation Error! Please try again!"]);
+        }
       }
     }
   }

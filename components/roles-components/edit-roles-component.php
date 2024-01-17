@@ -5,34 +5,52 @@
   // Initialize a variable to store any error message from the query string
   $message = isset($_GET['error']) ? htmlspecialchars($_GET['error']) : '';
 
-  $id = (int)$_GET['id'];
-  $currentDateTime = date("Y-m-d H:i:s");
-  $roles = $controllers->roles()->get_role_by_id($id);
-    
+  //Checks if id is set in the url
+  if(isset($_GET['id'])){
+    $id = (int)$_GET['id'];
+  }else{
+    if ($_SERVER['REQUEST_METHOD'] == 'POST')
+    {
+      // Process the submitted form data
+      $id = InputProcessor::processString($_POST['id']);
+      $name =  InputProcessor::processString(strtolower($_POST['name']));
+      $modifiedOn =  InputProcessor::processString($_POST['modifiedOn']); 
 
-  if ($_SERVER['REQUEST_METHOD'] == 'POST')
-  {
-    $id = (int)$_POST['id'];
-    $name =  strtolower($_POST['name']);
-    $modifiedOn =  $_POST['modifiedOn']; 
-    
-    $existing_role = $controllers->roles()->get_role_by_name($name);
-    if($existing_role){
-      redirect("manage_roles",["error" => "Role already exists!"]);
-    }else{
-      // Prepare the data for registration
-      $args = ['id' => $id,
-      'name' => $name,
-      'modifiedOn' => $modifiedOn];
+      // Validate all inputs
+      $valid = $id['valid'] && $name['valid'] && $modifiedOn['valid'];
 
-      $role = $controllers->roles()->update_role($args);
-      if ($role) {
-        redirect("manage_roles", ["success" => "Role has been updated!"]);
-      } else {
-        $message = "Role Edit Error! Please try again!";
+      // If all inputs are valid, proceed with update
+      if ($valid){
+        //Checks if role already exists
+        $existing_role = $controllers->roles()->get_role_by_name($name);
+        if($existing_role){
+          //Takes the user to the roles management page with error message
+          redirect("manage_roles",["error" => "Role already exists!"]);
+        }else{
+          //Prepare the data for update
+          $args = ['id' => $id['value'],
+          'name' => $name['value'],
+          'modifiedOn' => $modifiedOn['value']];
+
+          //Updates the selected role's details
+          $role = $controllers->roles()->update_role($args);
+          if ($role) {
+            //Takes the user to the roles management page with success message
+            redirect("manage_roles", ["success" => "Role has been updated!"]);
+          } else {
+            //Takes the user to the roles management page with error message
+            redirect("manage_roles", ["success" => "Role Edit Error! Please try again!"]);
+          }
+        }
       }
     }
+    //Takes the user to the user roles management page with error message
+    redirect("manage_user_roles", ["error" => "Connection Timeout"]);
   }
+  //Gets the current date and time
+  $currentDateTime = date("Y-m-d H:i:s");
+  //Gets the row of data based on id
+  $roles = $controllers->roles()->get_role_by_id($id);
 ?>
 
 <form method="post" action=" <?= htmlspecialchars($_SERVER['PHP_SELF']) ?>">
@@ -69,7 +87,7 @@
                 <input class="text-center" type="text" name="modifiedOn" id="modifiedOn" value="<?php echo $currentDateTime; ?>" readonly>
               </div>
             
-              <button class="btn btn-primary btn-lg w-100 mb-4" type="submit">Register</button>
+              <button class="btn btn-primary btn-lg w-100 mb-4" type="submit">Update</button>
             </div>
           </div>
         </div>

@@ -8,7 +8,7 @@
     }
 ?>
 
-<?php $title = 'Delete Roles Page'; require __DIR__ . "/inc/header.php"; ?>
+<?php $title = 'Delete Role Page'; require __DIR__ . "/inc/header.php"; ?>
      
 <?php require __DIR__ . "/components/roles-components/delete-roles-component.php"; ?>
 

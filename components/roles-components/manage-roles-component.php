@@ -1,79 +1,72 @@
 <?php
-  // Include the functions file for necessary functions and classes
-  require_once './inc/functions.php';
+    // Include the functions file for necessary functions and classes
+    require_once './inc/functions.php';
 
-  // Initialize a variable to store any error message from the query string
-  $message = isset($_GET['error']) ? htmlspecialchars($_GET['error']) : '';
+    // Retrieve all role data using the roles controller
+    $roles = $controllers->roles()->get_all_roles();
 
-  $id = (int)$_GET['id'];
-  $currentDateTime = date("Y-m-d H:i:s");
-  $roles = $controllers->roles()->get_role_by_id($id);
-    
-
-  if ($_SERVER['REQUEST_METHOD'] == 'POST')
-  {
-    $id = (int)$_POST['id'];
-    $name =  strtolower($_POST['name']);
-    $modifiedOn =  $_POST['modifiedOn']; 
-    
-    $existing_role = $controllers->roles()->get_role_by_name($name);
-    if($existing_role){
-      redirect("manage_roles",["error" => "Role already exists!"]);
-    }else{
-      // Prepare the data for registration
-      $args = ['id' => $id,
-      'name' => $name,
-      'modifiedOn' => $modifiedOn];
-
-      $role = $controllers->roles()->update_role($args);
-      if ($role) {
-        redirect("manage_roles", ["success" => "Role has been updated!"]);
-      } else {
-        $message = "Role Edit Error! Please try again!";
-      }
-    }
-  }
+    $errormessage = isset($_GET['error']) ? htmlspecialchars($_GET['error']) : '';
+    $successmessage = isset($_GET['success']) ? htmlspecialchars($_GET['success']) : '';
 ?>
 
-<form method="post" action=" <?= htmlspecialchars($_SERVER['PHP_SELF']) ?>">
-  <section class="vh-750 mt-5">
-    <div class="container py-5 h-75">
-      <div class="row d-flex justify-content-center align-items-center h-100">
-        <div class="col-12 col-md-8 col-lg-6 col-xl-5">
-          <div class="card shadow-2-strong mb-5" style="border-radius: 1rem;">
-            <div class="card-body px-5 py-3 text-center">
-              <h1 class="mb-3">Role Details</h1>
 
-              <div class="form-outline">
-                <label class="mb-2" for="id">Role ID:</label>
-              </div>
-              <div class="form-outline mb-2">
-                <input class="text-center" type="text" name="id" id="id" value="<?php echo $roles['id']; ?>" readonly>
-              </div>
-              <div class="form-outline">
-                <label for="name">Role Name:</label>
-              </div>
-              <div class="form-outline mb-2">
-                <input class="text-center" type="text" name="name" id="name" value="<?php echo $roles['name']; ?>" required>
-              </div>
-              <div class="form-outline">
-                <label for="createdOn">Created On:</label>
-              </div>
-              <div class="form-outline mb-2">
-                <input class="text-center" type="text" name="createdOn" id="createdOn" value="<?php echo $roles['createdOn']; ?>" readonly>
-              </div>
-              <div class="form-outline">
-                <label for="modifiedOn">Modified On:</label>
-              </div>
-              <div class="form-outline mb-4">
-                <input class="text-center" type="text" name="modifiedOn" id="modifiedOn" value="<?php echo $currentDateTime; ?>" readonly>
-              </div>
-            
-              <button class="btn btn-primary btn-lg w-100 mb-4" type="submit">Register</button>
+<div class="container mt-4" style="height: 100vh;">
+    <h2 class="text-center py-3 ">Role Management</h2> 
+    <table class="table table-striped text-center">
+        <thead>
+            <tr>
+                <th>ID</th> 
+                <th>Name</th> 
+                <th>Date Created</th>
+                <th>Date Modified</th>
+                <th></th> 
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Displays all rows of data in the roles table -->
+            <?php foreach ($roles as $role): ?>
+                <tr>
+                    <td><?= htmlspecialchars($role['id']) ?></td>
+                    <td><?= htmlspecialchars($role['name']) ?></td> 
+                    <td><?= htmlspecialchars($role['createdOn']) ?></td>
+                    <td><?= htmlspecialchars($role['modifiedOn']) ?></td>
+                    <td>
+                        <div class="row justify-content-center mx-1">
+                            <div class="col-lg-4 col-md-6 col-sm-12 mb-1">
+                                <!-- Takes user to the edit page -->
+                                <?php echo "<a href='edit_roles.php?id=" . $role["id"] . "'class='btn btn-warning'>Edit</a>"; ?>
+                            </div>
+                            <div class="col-lg-4 col-md-6 col-sm-12 mb-1">
+                                <!-- Takes user to the delete page -->
+                                <?php echo "<a href='delete_roles.php?id=" . $role["id"] . "'class='btn btn-danger'>Delete</a>";?>
+                            </div>                            
+                        </div>
+                    </td>
+                </tr>
+            <?php endforeach; ?>
+        </tbody>
+    </table>
+
+    <section>
+        <div class="text-center">
+            <div class="justify-content-center align-items-center mx-5 mt-5">
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 mb-4">
+                        <!-- Takes user to the create page -->
+                        <a href="create_roles.php" class="btn btn-primary btn-lg w-100">Create Role</a>
+                        <?php if($errormessage != null):?>
+                            <div class="alert alert-danger mt-4" role="alert">
+                                <?= $errormessage ?? '' ?>
+                            </div>
+                        <?php endif ?>
+                        <?php if ($successmessage != null): ?>
+                            <div class="alert alert-success mt-4" role="alert">
+                                <?= $successmessage ?? '' ?>
+                            </div>
+                        <?php endif ?>
+                    </div>
+                </div>
             </div>
-          </div>
         </div>
-      </div>
-    </div>
-  </section>
-</form>
+    </section>
+</div>

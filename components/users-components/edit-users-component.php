@@ -4,39 +4,53 @@
 
   // Initialize a variable to store any error message from the query string
   $message = isset($_GET['error']) ? htmlspecialchars($_GET['error']) : '';
+  
+  //Checks if id is set in the url
+  if(isset($_GET['id'])){
+    $id = (int)$_GET['id'];
+  }else{
+    if ($_SERVER['REQUEST_METHOD'] == 'POST')
+    {
+      // Process the submitted form data
+      $id = InputProcessor::processString($_POST['id']);
+      $firstname = InputProcessor::processString($_POST['firstname']);
+      $lastname = InputProcessor::processString($_POST['lastname']);
+      $email = InputProcessor::processEmail($_POST['email']);
+      $password = InputProcessor::processPassword($_POST['password'], $_POST['password-v']);
+      $modifiedOn = InputProcessor::processString($_POST['modifiedOn']);
 
-  $id = (int)$_GET['id'];
-  $currentDateTime = date("Y-m-d H:i:s");
-  $users = $controllers->members()->get_member_by_id($id);
-    
+      // Validate all inputs
+      $valid = $id['valid'] && $firstname['valid'] && $lastname['valid'] && $email['valid'] && $password['valid'] && $modifiedOn['valid'];
 
-  if ($_SERVER['REQUEST_METHOD'] == 'POST')
-  {
-    $id = (int)$_POST['id'];
-    $firstname =  $_POST['firstname'];
-    $lastname =  $_POST['lastname'];
-    $email =  $_POST['email'];
-    $modifiedOn =  $_POST['modifiedOn']; 
-    
-    $existing_member = $controllers->members()->get_member_by_email($email);
-    if($existing_member){
-      redirect("manage_users",["error" => "User already exists!"]);
-    }else{
-      // Prepare the data for registration
-      $args = ['id' => $id,
-      'firstname' => $firstname,
-      'lastname' => $lastname,
-      'email' => $email,
-      'modifiedOn' => $modifiedOn];
-
-      $user = $controllers->members()->update_member($args);
-      if ($user) {
-        redirect("manage_users", ["success" => "User has been updated!"]);
-      } else {
-        $message = "User Edit Error! Please try again!";
+      // If all inputs are valid, proceed with update
+      if ($valid){
+        // Prepare the data for update
+        $args = ['id' => (int)$id['value'],
+        'firstname' => $firstname['value'],
+        'lastname' => $lastname['value'],
+        'email' => $email['value'],
+        'password' => password_hash($password['value'], PASSWORD_DEFAULT),
+        'modifiedOn' => $modifiedOn['value']];
+          
+        //Updates the selected user's details
+        $user = $controllers->members()->update_member($args);
+        if ($user) {
+          //Takes the user to the user management page with success message
+          redirect("manage_users", ["success" => "User has been updated!"]);
+        } else {
+          //Takes the user to the user management page with error message
+          redirect("manage_users", ["error" => "User Edit Error! Please try again!"]);
+        }
       }
     }
+    //Takes the user to the user management page with error message
+    redirect("manage_users", ["error" => "Connection Timeout"]);
   }
+
+  //Gets the current time and date
+  $currentDateTime = date("Y-m-d H:i:s");
+  //Gets the row of data based on the id
+  $users = $controllers->members()->get_member_by_id($id);
 ?>
 
 <form method="post" action=" <?= htmlspecialchars($_SERVER['PHP_SELF']) ?>">
@@ -73,19 +87,31 @@
                 <input class="text-center" type="email" name="email" id="email" value="<?php echo $users['email']; ?>" required>
               </div>
               <div class="form-outline">
-                <label for="createdOn">Password:</label>
+                <label for="password">Password:</label>
+              </div>
+              <div class="form-outline mb-2">
+                <input class="text-center" type="password" name="password" id="password" placeholder="Enter Password" value="" required>
+              </div>
+              <div class="form-outline">
+                <label for="password-v">Confirm Password:</label>
+              </div>
+              <div class="form-outline mb-4">
+                <input class="text-center" type="password" name="password-v" id="password-v" placeholder="Confirm Password" value="" required>
+              </div>
+              <div class="form-outline">
+                <label for="createdOn">Created On:</label>
               </div>
               <div class="form-outline mb-2">
                 <input class="text-center" type="text" name="createdOn" id="createdOn" value="<?php echo $users['createdOn']; ?>" readonly>
               </div>
               <div class="form-outline">
-                <label for="modifiedOn">Confirm Password:</label>
+                <label for="modifiedOn">CModified On:</label>
               </div>
               <div class="form-outline mb-4">
                 <input class="text-center" type="text" name="modifiedOn" id="modifiedOn" value="<?php echo $currentDateTime; ?>" readonly>
               </div>
             
-              <button class="btn btn-primary btn-lg w-100 mb-4" type="submit">Register</button>
+              <button class="btn btn-primary btn-lg w-100 mb-4" type="submit">Update</button>
             </div>
           </div>
         </div>

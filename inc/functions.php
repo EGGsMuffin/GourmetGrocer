@@ -6,6 +6,7 @@
 
     $controllers = new Controllers(); //Instantiate controllers
 
+    //Built in redirect function allowing for messages to be sent from a link
     function redirect($page, array $params = [])
     {
         $qs = $params ? '?' . http_build_query($params) : '';

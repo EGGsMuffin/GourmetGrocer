@@ -8,8 +8,8 @@
     }
 ?>
 
-<?php $title = 'Create Role Page'; require __DIR__ . "/inc/header.php"; ?>
+<?php $title = 'Delete Inventory Page'; require __DIR__ . "/inc/header.php"; ?>
      
-<?php require __DIR__ . "/components/roles-components/create-roles-component.php"; ?>
+<?php require __DIR__ . "/components/inventory-components/delete-inventory-component.php"; ?>
 
 <?php require __DIR__ . "/inc/footer.php"; ?>

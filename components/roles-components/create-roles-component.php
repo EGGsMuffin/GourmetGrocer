@@ -9,24 +9,35 @@
 
   if ($_SERVER['REQUEST_METHOD'] == 'POST')
   {
-    $name =  strtolower($_POST['name']);
-    $createdOn =  $_POST['createdOn']; 
-    $modifiedOn =  $_POST['modifiedOn'];
-    
-    $existing_role = $controllers->roles()->get_role_by_name($name);
-    if($existing_role){
-      redirect("manage_roles",["error" => "Role already exists!"]);
-    }else{
-      // Prepare the data for registration
-      $args = ['name' => $name,
-      'createdOn' => $createdOn,
-      'modifiedOn' => $modifiedOn];
+    //Process the submitted form data
+    $name =  InputProcessor::processString(strtolower($_POST['name']));
+    $createdOn =  InputProcessor::processString($_POST['createdOn']); 
+    $modifiedOn =  InputProcessor::processString($_POST['modifiedOn']);
 
-      $role = $controllers->roles()->register_role($args);
-      if ($role) {
-        redirect("manage_roles", ["success" => "Role has been created!"]);
-      } else {
-        $message = "Role Creation Error! Please try again!";
+    //Validate all inputs
+    $valid = $name['valid'] && $createdOn['valid'] && $modifiedOn['valid'];
+
+    //If all inputs are valid, proceed with update
+    if ($valid){
+      //Checks if role already exists
+      $existing_role = $controllers->roles()->get_role_by_name($name['value']);
+      if($existing_role){
+        //Takes the user to the role management page with error message
+        redirect("manage_roles",["error" => "Role already exists!"]);
+      }else{
+        // Prepare the data for registration
+        $args = ['name' => $name['value'],
+        'createdOn' => $createdOn['value'],
+        'modifiedOn' => $modifiedOn['value']];
+
+        $role = $controllers->roles()->register_role($args);
+        if ($role) {
+          //Takes the user to the role management page with success message
+          redirect("manage_roles", ["success" => "Role has been created!"]);
+        } else {
+          //Takes the user to the role management page with error message
+          redirect("manage_roles", ["error" => "Role Creation Error! Please try again!"]);
+        }
       }
     }
   }

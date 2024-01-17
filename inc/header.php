@@ -28,8 +28,9 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
   
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <!-- If the user is logged in then they need to login to see more -->
       <?php if ($isLoggedIn): ?>
-        <a class="navbar-brand" href="./profile.php">Online Inventory</a>
+        <a class="navbar-brand" href="./menu.php">Online Inventory</a>
       <?php else: ?>
         <a class="navbar-brand" href="./index.php">Online Inventory</a>
       <?php endif; ?>
@@ -38,7 +39,11 @@
       </button>
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <!-- If the user is logged in then they need to login to see more -->
           <?php if ($isLoggedIn): ?>
+            <li class="nav-item active">
+                <a class="nav-link" href="./profile.php">Profile</a>
+              </li>
               <li class="nav-item active">
                 <a class="nav-link" href="./menu.php">Menu</a>
               </li>

@@ -34,6 +34,16 @@
             return $this->db->runSQL($sql, $args)->fetch();
         }
 
+        public function get_equipment_by_name(string $name)
+        {
+            // SQL query to select equipment data by name
+            $sql = "SELECT * FROM equipments WHERE name = :name";
+            $args = ['name' => $name];
+            
+            // Execute the query and return the result
+            return $this->db->runSQL($sql, $args)->fetch();
+        }
+
         // Function to retrieve all equipment entries from the database
         public function get_all_equipments()
         {

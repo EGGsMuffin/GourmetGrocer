@@ -2,6 +2,7 @@
     // Include the functions file for necessary functions and classes
     require_once './inc/functions.php';
 
+    // Retrieve all supplier data using the suppliers controller
     $suppliers = $controllers->suppliers()->get_all_suppliers();
 
     $errormessage = isset($_GET['error']) ? htmlspecialchars($_GET['error']) : '';
@@ -9,7 +10,7 @@
 ?>
 
 
-<div class="container mt-4">
+<div class="container mt-4" style="height: 100vh;">
     <h2 class="text-center py-3">Suppliers Management</h2> 
     <table class="table table-striped text-center">
         <thead>
@@ -27,6 +28,7 @@
             </tr>
         </thead>
         <tbody>
+            <!-- Displays all rows of data in the suppliers table -->
             <?php foreach ($suppliers as $supplier): ?>
                 <tr>
                     <td><?= htmlspecialchars($supplier['supplier_id']) ?></td>
@@ -41,9 +43,11 @@
                     <td>
                         <div class="row justify-content-center mx-1">
                             <div class="col-lg-12 col-md-12 col-sm-12 mb-1">
+                                <!-- Takes user to the edit page -->
                                 <?php echo "<a href='edit_suppliers.php?id=" . $supplier["supplier_id"] . "'class='btn btn-warning'>Edit</a>"; ?>
                             </div>
                             <div class="col-lg-12 col-md-12 col-sm-12 mb-1">
+                                <!-- Takes user to the delete page -->
                                 <?php echo "<a href='delete_suppliers.php?id=" . $supplier["supplier_id"] . "'class='btn btn-danger'>Delete</a>";?>
                             </div>                            
                         </div>
@@ -58,7 +62,8 @@
             <div class="justify-content-center align-items-center mx-5 mt-5">
                 <div class="row">
                     <div class="col-lg-12 col-md-12 mb-4">
-                        <a href="create_supplier.php" class="btn btn-primary btn-lg w-100">Create Role</a>
+                        <!-- Takes user to the create page -->
+                        <a href="create_suppliers.php" class="btn btn-primary btn-lg w-100">Create Supplier</a>
                         <?php if($errormessage != null):?>
                             <div class="alert alert-danger mt-4" role="alert">
                                 <?= $errormessage ?? '' ?>

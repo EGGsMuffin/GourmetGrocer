@@ -7,6 +7,7 @@
         protected $userRoles = null;
         protected $roles = null;
         protected $suppliers = null;
+        protected $categories = null;
 
         // Constructor method for the Controllers class
         public function __construct()
@@ -55,28 +56,44 @@
             return $this->members;
         }
 
+        // Method to get or create a userRole controller
         public function userRoles()
         {
+            // Check if userRoles controller is null, if so, create a new instance
             if ($this->userRoles === null) {
                 $this->userRoles = new UserRolesController($this->db);
             }
             return $this->userRoles;
         }
 
+        // Method to get or create a role controller
         public function roles()
         {
+            // Check if roles controller is null, if so, create a new instance
             if ($this->roles === null) {
                 $this->roles = new RolesController($this->db);
             }
             return $this->roles;
         }
 
+        // Method to get or create a supplier controller
         public function suppliers()
         {
+            // Check if suppliers controller is null, if so, create a new instance
             if ($this->suppliers === null) {
                 $this->suppliers = new SuppliersController($this->db);
             }
             return $this->suppliers;
         }
+
+        // Method to get or create a category controller
+        public function categories()
+        {
+            // Check if categories controller is null, if so, create a new instance
+            if ($this->categories === null) {
+                $this->categories = new categoriesController($this->db);
+            }
+            return $this->categories;
+        }
     }
-?>
+?>  
