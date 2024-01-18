@@ -21,7 +21,7 @@
     //Processes the submitted role
     $role_name = InputProcessor::processString($_POST['role']);
     //Gets the role id
-    $role = $controllers->roles()->get_role_by_name((string)$role_name);
+    $role = $controllers->roles()->get_role_by_name((string)$role_name['value']);
 
     //Checks if user has this role
     $role_id_check = $controllers->userRoles()->get_role_id_by_user_id($user_id);

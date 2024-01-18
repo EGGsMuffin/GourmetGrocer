@@ -22,7 +22,7 @@
       // If all inputs are valid, proceed with update
       if ($valid){
         //Checks if role already exists
-        $existing_role = $controllers->roles()->get_role_by_name($name);
+        $existing_role = $controllers->roles()->get_role_by_name((string)$name['value']);
         if($existing_role){
           //Takes the user to the roles management page with error message
           redirect("manage_roles",["error" => "Role already exists!"]);

@@ -20,16 +20,16 @@
       //If all inputs are valid, proceed with update
       if ($valid){
         //Prepare the data for update
-        $id = (int)$id['value']
+        $id = (int)$id['value'];
 
         //Deletes the selected supplier's details
         $supplier_deletion = $controllers->suppliers()->delete_supplier($id);
-        if ($supplier_update) {
+        if ($supplier_deletion) {
             //Takes the user to the supplier management page with success message
             redirect("manage_suppliers", ["success" => "Supplier has been created!"]);
         } else {
             //Takes the user to the supplier management page with error message
-            redirect("manage_suppliers", ["success" => "Supplier Creation Error! Please try again!"]);
+            redirect("manage_suppliers", ["error" => "Supplier Deletion Error! Please try again!"]);
         }
       }
     }

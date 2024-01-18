@@ -39,7 +39,7 @@
         $supplier = $controllers->suppliers()->register_supplier($args);
         if ($supplier) {
           //Takes the user to the supplier management page with success message
-          redirect("manage_suppliers", ["success" => "Member has been created!"]);
+          redirect("manage_suppliers", ["success" => "Supplier has been created!"]);
         } else {
           //Takes the user to the supplier management page with error message
           redirect("manage_suppliers", ["success" => "Supplier Creation Error! Please try again!"]);

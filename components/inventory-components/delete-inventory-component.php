@@ -20,7 +20,7 @@
       //If all inputs are valid, proceed with update
       if ($valid){
         //Prepare the data for update
-        $id = (int)$id['value']
+        $id = (int)$id['value'];
 
         //Deletes the selected inventory's details
         $inventory = $controllers->equipment()->delete_equipment($id);

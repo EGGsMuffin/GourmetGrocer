@@ -39,10 +39,10 @@
                 $supplier_update = $controllers->suppliers()->update_supplier($args);
                 if ($supplier_update) {
                     //Takes the user to the suppliers management page with success message
-                    redirect("manage_suppliers", ["success" => "Member has been created!"]);
+                    redirect("manage_suppliers", ["success" => "Supplier has been edited!"]);
                 } else {
                     //Takes the user to the suppliers management page with error message
-                    redirect("manage_suppliers", ["success" => "Supplier Creation Error! Please try again!"]);
+                    redirect("manage_suppliers", ["error" => "Supplier Edit Error! Please try again!"]);
                 }
             }
         }

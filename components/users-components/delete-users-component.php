@@ -20,9 +20,10 @@
       //If all inputs are valid, proceed with update
       if ($valid){
         //Prepare the data for update
-        $id = (int)$id['value']
+        $id = (int)$id['value'];
 
         //Deletes the selected user's details
+        $user_role_deletion = $controllers->userRoles()->delete_user_role($id);
         $user_deletion = $controllers->members()->delete_member($id);
         if ($user_deletion) {
           //Takes the user to the user management page with success message

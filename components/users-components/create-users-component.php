@@ -19,7 +19,7 @@
     //If all inputs are valid, proceed with update
     if ($valid){
       //Checks if email already exists
-      $existing_user = $controllers->members()->get_member_by_email($email['value']);
+      $existing_user = $controllers->members()->get_member_by_email((string)$email['value']);
       if($existing_user){
         //Takes the user to the user management page with error message
         redirect("manage_users",["error" => "User already exists!"]);
@@ -34,7 +34,7 @@
         $user = $controllers->members()->register_member($args);
 
         //Get the new user's id using their email
-        $user_id = $controllers->members()->get_member_by_email($email);
+        $user_id = $controllers->members()->get_member_by_email($email['value']);
         $user_id = (int)$user_id['ID'];
 
         //Create the role of a staff member for the new user account

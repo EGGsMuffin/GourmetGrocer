@@ -20,7 +20,7 @@
       //If all inputs are valid, proceed with update
       if ($valid){
         //Prepare the data for update
-        $id = (int)$id['value']
+        $id = (int)$id['value'];
 
         //Deletes the selected category's details
         $category = $controllers->categories()->delete_category($id);
@@ -49,10 +49,10 @@
             <div class="card-body px-5 py-3 text-center">
               <h1 class="mb-3">Category Details</h1>
               <div class="form-outline">
-                <label for="CategoryID">Category ID:</label>
+                <label for="id">Category ID:</label>
               </div>
               <div class="form-outline mb-2">
-                <input class="text-center" type="text" name="CategoryID" id="CategoryID" value="<?php echo $category['CategoryID'] ?>" readonly>
+                <input class="text-center" type="text" name="id" id="id" value="<?php echo $category['CategoryID'] ?>" readonly>
               </div>
               <div class="form-outline">
                 <label for="CategoryName">Category Name:</label>
